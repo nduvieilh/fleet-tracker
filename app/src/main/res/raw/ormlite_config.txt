@@ -1,0 +1,55 @@
+#
+# generated on 2016/04/09 08:22:33
+#
+# --table-start--
+dataClass=com.thenicky.fleettracker.Vehicle
+tableName=vehciles
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=name
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=vin
+unique=true
+# --field-end--
+# --field-start--
+fieldName=make
+# --field-end--
+# --field-start--
+fieldName=model
+# --field-end--
+# --field-start--
+fieldName=year
+# --field-end--
+# --field-start--
+fieldName=color
+# --field-end--
+# --field-start--
+fieldName=plate
+# --field-end--
+# --field-start--
+fieldName=state
+# --field-end--
+# --field-start--
+fieldName=active
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=created
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=modified
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=deleted
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
