@@ -49,7 +49,8 @@ public class Vehicle {
     //public Vehicle() {
         // For ORMLite
     //}
-    public Vehicle(Integer id, String name, String vin, String make, String model, String year, String color, String plate, String state, Date created, Date modified, Date deleted) {
+
+    public Vehicle(Integer id, String name, String vin, String make, String model, String year, String color, String plate, String state, Boolean active, Date created, Date modified, Date deleted) {
         this.id = id;
         this.name = name;
         this.vin = vin;
@@ -59,15 +60,16 @@ public class Vehicle {
         this.color = color;
         this.plate = plate;
         this.state = state;
-        this.active = true;
+        this.active = active;
         this.created = created;
         this.modified = modified;
-        this.deleted = null;
+        this.deleted = deleted;
     }
 
 
     public void loadTrips() {
-
+        Trip trip = newTrip();
+        trips.add(trip);
     }
 
     public void unloadTrips() {
@@ -76,7 +78,7 @@ public class Vehicle {
 
     public Trip newTrip() {
 
-        Trip trip = new Trip();
+        Trip trip = new Trip(1, 1, new Date(), new Date(), false, 0, true, new Date(), new Date(), new Date());
 
         return trip;
     }

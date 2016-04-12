@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity implements VehicleFragment.O
 
 
     public void onListFragmentInteraction(Vehicle vehicle) {
-
+        Intent intent = new Intent(this, VehicleActivity.class);
+        intent.putExtra("vehicle", vehicle.id);
+        startActivity(intent);
     }
 
 

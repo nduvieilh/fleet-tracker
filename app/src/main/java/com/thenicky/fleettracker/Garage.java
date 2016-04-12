@@ -18,7 +18,7 @@ public class Garage {
     }
 
     public void loadVehicles() {
-        Vehicle vehicle = new Vehicle(1, "Nicky's Car", "123456ABCDEF", "Chrysler", "Sebring", "2004", "White", "ABC 123", "MS", new Date(), new Date(), null);
+        Vehicle vehicle = new Vehicle(1, "Nicky's Car", "123456ABCDEF", "Chrysler", "Sebring", "2004", "White", "ABC 123", "MS", true, new Date(), new Date(), null);
         addVehicles(vehicle);
     }
 
@@ -33,6 +33,15 @@ public class Garage {
         vehicles.remove(vehicle);
     }
 
+    public static Vehicle getVehicle(Integer vehicleId) {
+        try {
+            return vehicles.get(vehicleId);
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
+            return null;
+        }
+
+    }
 
     public static synchronized Garage getInstance() {
         if(mInstance == null) {

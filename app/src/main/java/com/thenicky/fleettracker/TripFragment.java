@@ -18,9 +18,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class VehicleFragment extends Fragment {
-    Garage garage = Garage.getInstance();
-    Vehicle vehicle = null;
+public class TripFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -32,13 +30,13 @@ public class VehicleFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public VehicleFragment() {
+    public TripFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static VehicleFragment newInstance(int columnCount) {
-        VehicleFragment fragment = new VehicleFragment();
+    public static TripFragment newInstance(int columnCount) {
+        TripFragment fragment = new TripFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -51,15 +49,13 @@ public class VehicleFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-            Integer vehicleId = getArguments().getInt("vehicle", 0);
-            vehicle = garage.getVehicle(vehicleId);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_vehicle_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_trip_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -71,9 +67,10 @@ public class VehicleFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            Garage garage = Garage.getInstance();
+            Integer vehicleId = 0;
+            Vehicle vehicle = Garage.getVehicle(vehicleId);
 
-            recyclerView.setAdapter(new MyVehicleRecyclerViewAdapter(garage.vehicles, mListener));
+            recyclerView.setAdapter(new MyTripRecyclerViewAdapter(vehicle.trips, mListener));
         }
         return view;
     }
@@ -108,6 +105,6 @@ public class VehicleFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Vehicle vehicle);
+        void onListFragmentInteraction(Trip item);
     }
 }
