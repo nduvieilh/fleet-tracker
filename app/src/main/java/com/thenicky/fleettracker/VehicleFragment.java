@@ -19,7 +19,7 @@ import java.util.List;
  * interface.
  */
 public class VehicleFragment extends Fragment {
-    Garage garage = Garage.getInstance();
+    Garage garage = null;
     Vehicle vehicle = null;
 
     // TODO: Customize parameter argument names
@@ -51,7 +51,7 @@ public class VehicleFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-            Integer vehicleId = getArguments().getInt("vehicle", 0);
+            Integer vehicleId = getArguments().getInt("vehicle_id");
             vehicle = garage.getVehicle(vehicleId);
         }
     }
@@ -71,7 +71,7 @@ public class VehicleFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            Garage garage = Garage.getInstance();
+            garage = Garage.getInstance();
 
             recyclerView.setAdapter(new MyVehicleRecyclerViewAdapter(garage.vehicles, mListener));
         }
@@ -107,7 +107,6 @@ public class VehicleFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Vehicle vehicle);
     }
 }

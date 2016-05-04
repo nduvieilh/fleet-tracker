@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class TripFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
+    private Garage garage = Garage.getInstance();
+    private Vehicle vehicle;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -33,7 +33,6 @@ public class TripFragment extends Fragment {
     public TripFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static TripFragment newInstance(int columnCount) {
         TripFragment fragment = new TripFragment();
@@ -49,6 +48,8 @@ public class TripFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            Integer vehicleId = getArguments().getInt("vehicle_id");
+            vehicle = garage.getVehicle(vehicleId);
         }
     }
 
@@ -66,9 +67,6 @@ public class TripFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-
-            Integer vehicleId = 0;
-            Vehicle vehicle = Garage.getVehicle(vehicleId);
 
             recyclerView.setAdapter(new MyTripRecyclerViewAdapter(vehicle.trips, mListener));
         }
@@ -104,7 +102,6 @@ public class TripFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Trip item);
     }
 }

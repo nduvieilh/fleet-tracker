@@ -1,5 +1,9 @@
 package com.thenicky.fleettracker;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +25,28 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class TripActivity extends AppCompatActivity {
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.thenicky.fleettracker.database.TrackerDBHelper;
+import com.thenicky.fleettracker.entry.ExportFragment;
+import com.thenicky.fleettracker.entry.Position;
+import com.thenicky.fleettracker.entry.Temp;
+import com.thenicky.fleettracker.entry.TripMapFragment;
+import com.thenicky.fleettracker.entry.Vital;
+import com.thenicky.fleettracker.settings.TripSettingsActivity;
+
+import java.lang.ref.WeakReference;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TripActivity extends AppCompatActivity implements ExportFragment.OnFragmentInteractionListener  {
+    private static final int RESULT_SETTINGS = 1;
+
+    private TrackerDBHelper databaseHelper = null;
+    private Garage garage = Garage.getInstance();
+    private Vehicle vehicle = null;
+    private Trip trip = null;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -35,6 +61,7 @@ public class TripActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+    private TabLayout tabLayout;
     private ViewPager mViewPager;
 
     @Override
@@ -52,22 +79,56 @@ public class TripActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        if(savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras != null) {
+                try {
+                    Integer vehicleId = extras.getInt("vehicle_id");
+                    Integer tripId = extras.getInt("trip_id");
+                    vehicle = Garage.getVehicle(vehicleId);
+                    trip = vehicle.getTrip(tripId);
+                } catch(NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }
 
+        if(trip != null) {
+            // Set the title of the actionBar
+            setTitle(trip.start_time.toString());
+
+            // Initialize the entry List
+            databaseAction("loadEntries");
+        }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Unload entries to free up memory
+        trip.unloadEntries();
+
+        // Release the database helper when Activity is destroyed
+        if (databaseHelper != null) {
+            OpenHelperManager.releaseHelper();
+            databaseHelper = null;
+        }
+    }
+
+    private TrackerDBHelper getHelper() {
+        if (databaseHelper == null) {
+            databaseHelper = OpenHelperManager.getHelper(this, TrackerDBHelper.class);
+        }
+        return databaseHelper;
+    }
+
 
 
     @Override
@@ -84,12 +145,37 @@ public class TripActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, TripSettingsActivity.class);
+            startActivityForResult(i, RESULT_SETTINGS);
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case RESULT_SETTINGS:
+                databaseAction("loadEntries");
+
+                mSectionsPagerAdapter.onRefresh(tabLayout.getSelectedTabPosition());
+                break;
+
+        }
+
+    }
+
+    /**
+     * Handle fragment interaction for the export page
+     * @param uri
+     */
+    public void onExportFragmentInteraction(Uri uri) {
+
     }
 
     /**
@@ -132,6 +218,8 @@ public class TripActivity extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private final SparseArray<WeakReference<Fragment>> instantiatedFragments = new SparseArray<>();
+        private ArrayList<String> mTabHeader;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -141,28 +229,116 @@ public class TripActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            //return PlaceholderFragment.newInstance(position + 1);
+
+            switch (position) {
+                case 0:
+                    return TripMapFragment.newInstance(trip, 30.3099202993725D, -89.8624973905491D, 10F);
+                case 1:
+                    return PlaceholderFragment.newInstance(position + 1);
+                case 2:
+                    return PlaceholderFragment.newInstance(position + 1);
+                    //return SupportMapFragment.newInstance();
+                    //return ExportFragment.newInstance("Export", "");
+            }
+
             return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "MAP";
                 case 1:
-                    return "SECTION 2";
+                    return "GRAPHS";
                 case 2:
-                    return "SECTION 3";
-                case 3:
-                    return "TEST";
+                    return "EXPORT";
             }
             return null;
+        }
+
+        @Override
+        public Object instantiateItem(final ViewGroup container, final int position) {
+            final Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            instantiatedFragments.put(position, new WeakReference<>(fragment));
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(final ViewGroup container, final int position, final Object object) {
+            instantiatedFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        @Nullable
+        public Fragment getFragment(final int position) {
+            final WeakReference<Fragment> wr = instantiatedFragments.get(position);
+            if (wr != null) {
+                return wr.get();
+            } else {
+                return null;
+            }
+        }
+
+        // No param version of onRefresh that refreshes the current page
+        public void onRefresh() {this.onRefresh(tabLayout.getSelectedTabPosition());}
+
+        public void onRefresh(final int position) {
+            Fragment fragment = this.getFragment(position);
+
+            if(fragment != null) {
+                switch(position) {
+                    case 0:
+                        ((TripMapFragment) fragment).onRefresh();
+                        break;
+                }
+            }
+        }
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    private void databaseAction(String action) {
+
+        switch(action.toLowerCase()) {
+            case "loadentries":
+                try {
+                    int seconds = PreferenceManager.getDefaultSharedPreferences(this).getInt("TRIP_RESOLUTION", 10);
+                    long resolution = (long) seconds * 1000;
+                    List<Vital> vitals;
+                    List<Temp> temps;
+                    List<Position> positions;
+
+                    Dao<Vital, Integer> vitalDao = getHelper().getVitalDao();
+                    Dao<Temp, Integer> tempDao = getHelper().getTempDao();
+                    Dao<Position, Integer> positionDao = getHelper().getPositionDao();
+
+                    vitals = vitalDao.queryForEq("trip_id", trip.id);
+                    temps = tempDao.queryForEq("trip_id", trip.id);
+                    positions = positionDao.queryForEq("trip_id", trip.id);
+
+                    trip.loadEntries(vitals, temps, positions, resolution);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            case "increaseviewcount":
+                try {
+                    Dao<Trip, Integer> tripDao = getHelper().getTripDao();
+                    trip.view_count++;
+                    tripDao.update(trip);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 }

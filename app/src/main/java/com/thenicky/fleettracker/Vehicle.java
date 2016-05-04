@@ -1,54 +1,51 @@
 package com.thenicky.fleettracker;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.thenicky.fleettracker.Trip;
-
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Nicholas on 3/30/2016.
  */
-
-@DatabaseTable(tableName = "vehciles")
+@DatabaseTable(tableName = "vehicles")
 public class Vehicle {
     @DatabaseField(id = true)
-    public final Integer id;
+    public Integer id;
     @DatabaseField(canBeNull = false)
-    public final String name;
+    public String name;
     @DatabaseField(unique = true)
-    public final String vin;
+    public String vin;
     @DatabaseField
-    public final String make;
+    public String make;
     @DatabaseField
-    public final String model;
+    public String model;
     @DatabaseField
-    public final String year;
+    public String year;
     @DatabaseField
-    public final String color;
+    public String color;
     @DatabaseField
-    public final String plate;
+    public String plate;
     @DatabaseField
-    public final String state;
-    @DatabaseField(canBeNull = false)
-    private final Boolean active;
-    @DatabaseField(canBeNull = false)
-    public final Date created;
-    @DatabaseField(canBeNull = false)
-    public final Date modified;
-    @DatabaseField()
-    private final Date deleted;
+    public String state;
+    @DatabaseField(canBeNull = false, defaultValue = "1")
+    public Boolean active;
+    @DatabaseField(canBeNull = false, dataType = DataType.DATE_LONG)
+    public Date created;
+    @DatabaseField(canBeNull = false, dataType = DataType.DATE_LONG)
+    public Date modified;
+    @DatabaseField(dataType = DataType.DATE_LONG)
+    public Date deleted;
 
-
-    public ArrayList trips = new ArrayList<Trip>();
+    public List<Trip> trips;
 
     /**
      * constructors
      */
-    //public Vehicle() {
+    public Vehicle() {
         // For ORMLite
-    //}
+    }
 
     public Vehicle(Integer id, String name, String vin, String make, String model, String year, String color, String plate, String state, Boolean active, Date created, Date modified, Date deleted) {
         this.id = id;
@@ -67,24 +64,26 @@ public class Vehicle {
     }
 
 
-    public void loadTrips() {
-        Trip trip = newTrip();
-        trips.add(trip);
+    public void loadTrips(List<Trip> _trips) {
+        // Ensure that the trips List is empty
+        unloadTrips();
+
+       trips = _trips;
     }
 
     public void unloadTrips() {
-        trips.clear();
+        if(trips != null) {
+            trips.clear();
+        }
     }
 
-    public Trip newTrip() {
-
-        Trip trip = new Trip(1, 1, new Date(), new Date(), false, 0, true, new Date(), new Date(), new Date());
-
-        return trip;
-    }
-
-    public void viewTrip(Trip trip) {
-
+    public Trip getTrip(Integer tripId) {
+        for(Trip trip : trips) {
+            if(trip.id == tripId) {
+                return trip;
+            }
+        }
+        return null;
     }
 
     public void removeTrip(Trip trip) {

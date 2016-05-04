@@ -1,9 +1,9 @@
 #
-# generated on 2016/04/09 08:22:33
+# generated on 2016/04/24 02:39:03
 #
 # --table-start--
 dataClass=com.thenicky.fleettracker.Vehicle
-tableName=vehciles
+tableName=vehicles
 # --table-fields-start--
 # --field-start--
 fieldName=id
@@ -37,18 +37,225 @@ fieldName=state
 # --field-end--
 # --field-start--
 fieldName=active
+defaultValue=1
 canBeNull=false
 # --field-end--
 # --field-start--
 fieldName=created
+dataPersister=DATE_LONG
 canBeNull=false
 # --field-end--
 # --field-start--
 fieldName=modified
+dataPersister=DATE_LONG
 canBeNull=false
 # --field-end--
 # --field-start--
 fieldName=deleted
+dataPersister=DATE_LONG
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.thenicky.fleettracker.Trip
+tableName=trips
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=vehicle
+canBeNull=false
+foreign=true
+# --field-end--
+# --field-start--
+fieldName=start_time
+dataPersister=DATE_LONG
+# --field-end--
+# --field-start--
+fieldName=end_time
+dataPersister=DATE_LONG
+# --field-end--
+# --field-start--
+fieldName=synced
+defaultValue=0
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=view_count
+defaultValue=0
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=active
+defaultValue=1
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=created
+dataPersister=DATE_LONG
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=modified
+dataPersister=DATE_LONG
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=deleted
+dataPersister=DATE_LONG
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.thenicky.fleettracker.entry.Vital
+tableName=vitals
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=trip
+canBeNull=false
+foreign=true
+# --field-end--
+# --field-start--
+fieldName=engine_rpm
+# --field-end--
+# --field-start--
+fieldName=speed_obd
+# --field-end--
+# --field-start--
+fieldName=air_flow_rate
+# --field-end--
+# --field-start--
+fieldName=throttle_position
+# --field-end--
+# --field-start--
+fieldName=load
+# --field-end--
+# --field-start--
+fieldName=torque
+# --field-end--
+# --field-start--
+fieldName=boost_pressure
+# --field-end--
+# --field-start--
+fieldName=turbo_rpm
+# --field-end--
+# --field-start--
+fieldName=horsepower
+# --field-end--
+# --field-start--
+fieldName=fuel_rate
+# --field-end--
+# --field-start--
+fieldName=created
+dataPersister=DATE_LONG
+canBeNull=false
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.thenicky.fleettracker.entry.Temp
+tableName=temps
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=trip
+canBeNull=false
+foreign=true
+# --field-end--
+# --field-start--
+fieldName=engine_coolant
+# --field-end--
+# --field-start--
+fieldName=intake_air
+# --field-end--
+# --field-start--
+fieldName=catalyst
+# --field-end--
+# --field-start--
+fieldName=ambient_air
+# --field-end--
+# --field-start--
+fieldName=engine_oil
+# --field-end--
+# --field-start--
+fieldName=turbocharger
+# --field-end--
+# --field-start--
+fieldName=created
+dataPersister=DATE_LONG
+canBeNull=false
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.thenicky.fleettracker.entry.Position
+tableName=positions
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=trip
+canBeNull=false
+foreign=true
+# --field-end--
+# --field-start--
+fieldName=lat
+# --field-end--
+# --field-start--
+fieldName=lon
+# --field-end--
+# --field-start--
+fieldName=bearing
+# --field-end--
+# --field-start--
+fieldName=altitude
+# --field-end--
+# --field-start--
+fieldName=accuracy
+# --field-end--
+# --field-start--
+fieldName=speed
+# --field-end--
+# --field-start--
+fieldName=satellites
+# --field-end--
+# --field-start--
+fieldName=accel_x
+# --field-end--
+# --field-start--
+fieldName=accel_y
+# --field-end--
+# --field-start--
+fieldName=accel_z
+# --field-end--
+# --field-start--
+fieldName=gyro_x
+# --field-end--
+# --field-start--
+fieldName=gyro_y
+# --field-end--
+# --field-start--
+fieldName=gyro_z
+# --field-end--
+# --field-start--
+fieldName=created
+dataPersister=DATE_LONG
+canBeNull=false
 # --field-end--
 # --table-fields-end--
 # --table-end--

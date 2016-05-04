@@ -4,4 +4,16 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="vehicle_activity_name">Vehicle Name</string>
     <string name="trip_activity_name">Trip Date</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Trip Preferences strings -->
+    <string name="trip_settings_activity_name">Trip Settings</string>
+    <string name="pref_trip">Trip</string>
+    <string name="pref_trip_resolution">Trip Resolution</string>
+    <string name="pref_trip_resolution_summary">Currently: $1</string>
+    <string name="pref_trip_resolution_dialog_message">Select the number of seconds between each mapped entry.  More time between each entry give a higher performance.  Less time give more information.</string>
+    <string name="pref_trip_resolution_unit">S</string>
+
 </resources>

@@ -15,7 +15,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +29,8 @@
             android:name=".VehicleActivity"
             android:label="@string/vehicle_activity_name"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.thenicky.fleettracker.MainActivity" />
@@ -39,12 +41,26 @@
             android:name=".TripActivity"
             android:label="@string/trip_activity_name"
             android:parentActivityName=".VehicleActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
 
             <!-- Link to parent activity -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.thenicky.fleettracker.VehicleActivity" />
+        </activity>
+
+        <!-- Trip Settings Activity -->
+        <activity
+            android:name=".settings.TripSettingsActivity"
+            android:label="@string/trip_settings_activity_name"
+            android:parentActivityName=".TripActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <!-- Link to parent activity -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.thenicky.fleettracker.TripActivity" />
         </activity>
 
     </application>
