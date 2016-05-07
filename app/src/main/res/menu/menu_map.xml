@@ -4,9 +4,12 @@
     tools:context="com.thenicky.fleettracker.TripActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/action_rpm"
+        android:title="View RPMs"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_fuel"
+        android:title="View Fuel Consumption"
         app:showAsAction="never" />
 
 </menu>

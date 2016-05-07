@@ -56,8 +56,7 @@ public class TripMapFragment extends SupportMapFragment implements OnMapReadyCal
         args.putFloat(ZOOM, zoom);
         fragment.setArguments(args);
 
-
-
+        // Set mTrip if not set
         if(mTrip == null) {
             mTrip = trip;
         }
@@ -82,7 +81,7 @@ public class TripMapFragment extends SupportMapFragment implements OnMapReadyCal
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        // Get
+        // Get map
         this.getMapAsync(this);
 
         return view;
@@ -118,7 +117,6 @@ public class TripMapFragment extends SupportMapFragment implements OnMapReadyCal
 
 
     public Polyline drawMap(Garage.TripFilter filter, Boolean clear) {
-        ArgbEvaluator argbEval = new ArgbEvaluator();
         try {
             Polyline line;
             PolylineOptions lineOptions = new PolylineOptions();
@@ -128,13 +126,25 @@ public class TripMapFragment extends SupportMapFragment implements OnMapReadyCal
                 mMap.clear();
             }
 
+            int lower = Color.rgb(255, 0, 0);
+            int upper = Color.rgb(0,158,0);
+            float filterAmount = 0F;
+            ArgbEvaluator evaluator = new ArgbEvaluator();
+            int color = 0;
+            double size = 0D;
+
             switch(filter) {
                 case POI:
                     for(Entry entry : mTrip.entries){
+                        filterAmount = (entry.getVital().engine_rpm - mTrip.smallest.getVital().engine_rpm) / (mTrip.largest.getVital().engine_rpm - mTrip.smallest.getVital().engine_rpm);
+                        color = (Integer) evaluator.evaluate(filterAmount, upper, lower);
+                        size = 100 * filterAmount * filterAmount;
+
                         mMap.addCircle(new CircleOptions()
-                            .center(new LatLng(entry.getPosition().lat, entry.getPosition().lon))
-                            .strokeColor(Color.rgb(rand(0,255), rand(0, 255), rand(0, 255)))
-                            .radius(10D)
+                                        .center(new LatLng(entry.getPosition().lat, entry.getPosition().lon))
+                                        .strokeColor(color)
+                                        .fillColor(color)
+                                        .radius(size)
                         );
                     }
                     break;
@@ -142,10 +152,32 @@ public class TripMapFragment extends SupportMapFragment implements OnMapReadyCal
 
                     break;
                 case RPMS:
+                    for(Entry entry : mTrip.entries){
+                        filterAmount = (entry.getVital().engine_rpm - mTrip.smallest.getVital().engine_rpm) / (mTrip.largest.getVital().engine_rpm - mTrip.smallest.getVital().engine_rpm);
+                        color = (Integer) evaluator.evaluate(filterAmount, upper, lower);
+                        size = 100 * filterAmount * filterAmount;
 
+                        mMap.addCircle(new CircleOptions()
+                                        .center(new LatLng(entry.getPosition().lat, entry.getPosition().lon))
+                                        .strokeColor(color)
+                                        .fillColor(color)
+                                        .radius(size)
+                        );
+                    }
                     break;
                 case FUEL:
+                    for(Entry entry : mTrip.entries){
+                        filterAmount = (entry.getVital().fuel_rate - mTrip.smallest.getVital().fuel_rate) / (mTrip.largest.getVital().fuel_rate - mTrip.smallest.getVital().fuel_rate);
+                        color = (Integer) evaluator.evaluate(filterAmount, upper, lower);
+                        size = 100 * filterAmount * filterAmount;
 
+                        mMap.addCircle(new CircleOptions()
+                                        .center(new LatLng(entry.getPosition().lat, entry.getPosition().lon))
+                                        .strokeColor(color)
+                                        .fillColor(color)
+                                        .radius(size)
+                        );
+                    }
                     break;
                 case GEARS:
 

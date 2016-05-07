@@ -83,12 +83,12 @@ public class Temp {
     public Temp largest(List<Temp> temps) {
         try {
             for(Temp temp : temps) {
-                if(this.engine_coolant == null || temp.engine_coolant > this.engine_coolant) this.engine_coolant = temp.engine_coolant;
-                if(this.intake_air == null || temp.intake_air > this.intake_air) this.intake_air = temp.intake_air;
-                if(this.catalyst == null || temp.catalyst > this.catalyst) this.catalyst = temp.catalyst;
-                if(this.ambient_air == null || temp.ambient_air > this.ambient_air) this.ambient_air = temp.ambient_air;
-                if(this.engine_oil == null || temp.engine_oil > this.engine_oil) this.engine_oil = temp.engine_oil;
-                if(this.turbocharger == null || temp.turbocharger > this.turbocharger) this.turbocharger = temp.turbocharger;
+                if(this.engine_coolant == null || (temp.engine_coolant != null && temp.engine_coolant > this.engine_coolant)) this.engine_coolant = temp.engine_coolant;
+                if(this.intake_air == null || (temp.intake_air != null && temp.intake_air > this.intake_air)) this.intake_air = temp.intake_air;
+                if(this.catalyst == null || (temp.catalyst != null && temp.catalyst > this.catalyst)) this.catalyst = temp.catalyst;
+                if(this.ambient_air == null || (temp.ambient_air != null && temp.ambient_air > this.ambient_air)) this.ambient_air = temp.ambient_air;
+                if(this.engine_oil == null || (temp.engine_oil != null && temp.engine_oil > this.engine_oil)) this.engine_oil = temp.engine_oil;
+                if(this.turbocharger == null || (temp.turbocharger != null && temp.turbocharger > this.turbocharger)) this.turbocharger = temp.turbocharger;
             }
             return this;
         } catch(NullPointerException e) {
@@ -100,12 +100,12 @@ public class Temp {
     public Temp smallest(List<Temp> temps) {
         try {
             for(Temp temp : temps) {
-                if(this.engine_coolant == null || temp.engine_coolant < this.engine_coolant) this.engine_coolant = temp.engine_coolant;
-                if(this.intake_air == null || temp.intake_air < this.intake_air) this.intake_air = temp.intake_air;
-                if(this.catalyst == null || temp.catalyst < this.catalyst) this.catalyst = temp.catalyst;
-                if(this.ambient_air == null || temp.ambient_air < this.ambient_air) this.ambient_air = temp.ambient_air;
-                if(this.engine_oil == null || temp.engine_oil < this.engine_oil) this.engine_oil = temp.engine_oil;
-                if(this.turbocharger == null || temp.turbocharger < this.turbocharger) this.turbocharger = temp.turbocharger;
+                if(this.engine_coolant == null || (temp.engine_coolant != null && temp.engine_coolant < this.engine_coolant)) this.engine_coolant = temp.engine_coolant;
+                if(this.intake_air == null || (temp.intake_air != null && temp.intake_air < this.intake_air)) this.intake_air = temp.intake_air;
+                if(this.catalyst == null || (temp.catalyst != null && temp.catalyst < this.catalyst)) this.catalyst = temp.catalyst;
+                if(this.ambient_air == null || (temp.ambient_air != null && temp.ambient_air < this.ambient_air)) this.ambient_air = temp.ambient_air;
+                if(this.engine_oil == null || (temp.engine_oil != null && temp.engine_oil < this.engine_oil)) this.engine_oil = temp.engine_oil;
+                if(this.turbocharger == null || (temp.turbocharger != null && temp.turbocharger < this.turbocharger)) this.turbocharger = temp.turbocharger;
             }
             return this;
         } catch(NullPointerException e) {

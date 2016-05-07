@@ -17,4 +17,34 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.Default" parent="AppTheme">
+    </style>
+
+    <!-- Quick stat styles -->
+    <style name="QuickStat">
+        <item name="android:elevation">2dp</item>
+    </style>
+    <style name="QuickStatContainer">
+        <item name="android:layout_height">100dp</item>
+        <item name="android:background">#FFF</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="QuickStatValue" parent="@style/TextAppearance.AppCompat.Large">
+        <item name="android:textSize">42sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+    <style name="QuickStatUnit" parent="@style/TextAppearance.AppCompat.Large">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+    <style name="QuickStatTitle" parent="@style/TextAppearance.AppCompat.Small">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center_vertical|bottom</item>
+    </style>
+
+
 </resources>

@@ -1,0 +1,151 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:id="@+id/scrollView">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/QuickStat">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+                <FrameLayout
+                    android:layout_weight="1"
+                    style="@style/QuickStatContainer"
+                    android:layout_width="match_parent">
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|center_horizontal"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/quick_stat_top_speed_value"
+                            style="@style/QuickStatValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/quick_stat_top_speed_unit"
+                            style="@style/QuickStatUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_MPH"/>
+
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/quick_stat_top_speed_title"
+                        style="@style/QuickStatTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quick_stat_top_speed"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_weight="1"
+                    style="@style/QuickStatContainer"
+                    android:layout_width="match_parent">
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|center_horizontal"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/quick_stat_avg_mpg_value"
+                            style="@style/QuickStatValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/quick_stat_avg_mpg_unit"
+                            style="@style/QuickStatUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_MPG"/>
+
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/quick_stat_avg_mpg_title"
+                        style="@style/QuickStatTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quick_stat_avg_mpg"/>
+                </FrameLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+                <FrameLayout
+                    android:layout_weight="1"
+                    style="@style/QuickStatContainer"
+                    android:layout_width="match_parent">
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|center_horizontal"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/quick_stat_moving_time_value"
+                            style="@style/QuickStatValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/quick_stat_moving_time_unit"
+                            style="@style/QuickStatUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_min"/>
+
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/quick_stat_moving_time_title"
+                        style="@style/QuickStatTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quick_stat_moving_time" />
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_weight="1"
+                    style="@style/QuickStatContainer"
+                    android:layout_width="match_parent">
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|center_horizontal"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/quick_stat_still_time_value"
+                            style="@style/QuickStatValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/quick_stat_still_time_unit"
+                            style="@style/QuickStatUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_min"/>
+
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/quick_stat_still_time_title"
+                        style="@style/QuickStatTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quick_stat_still_time" />
+                </FrameLayout>
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -5,8 +5,6 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,7 +26,7 @@ import android.widget.TextView;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.thenicky.fleettracker.database.TrackerDBHelper;
-import com.thenicky.fleettracker.entry.ExportFragment;
+import com.thenicky.fleettracker.entry.TripInfoFragment;
 import com.thenicky.fleettracker.entry.Position;
 import com.thenicky.fleettracker.entry.Temp;
 import com.thenicky.fleettracker.entry.TripMapFragment;
@@ -40,7 +38,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TripActivity extends AppCompatActivity implements ExportFragment.OnFragmentInteractionListener  {
+public class TripActivity extends AppCompatActivity  {
     private static final int RESULT_SETTINGS = 1;
 
     private TrackerDBHelper databaseHelper = null;
@@ -233,13 +231,9 @@ public class TripActivity extends AppCompatActivity implements ExportFragment.On
 
             switch (position) {
                 case 0:
-                    return TripMapFragment.newInstance(trip, 30.3099202993725D, -89.8624973905491D, 10F);
+                    return TripMapFragment.newInstance(trip, 30.3099202993725D, -89.8624973905491D, 12F);
                 case 1:
-                    return PlaceholderFragment.newInstance(position + 1);
-                case 2:
-                    return PlaceholderFragment.newInstance(position + 1);
-                    //return SupportMapFragment.newInstance();
-                    //return ExportFragment.newInstance("Export", "");
+                    return TripInfoFragment.newInstance(trip);
             }
 
             return PlaceholderFragment.newInstance(position + 1);
@@ -248,7 +242,7 @@ public class TripActivity extends AppCompatActivity implements ExportFragment.On
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -257,9 +251,7 @@ public class TripActivity extends AppCompatActivity implements ExportFragment.On
                 case 0:
                     return "MAP";
                 case 1:
-                    return "GRAPHS";
-                case 2:
-                    return "EXPORT";
+                    return "INFO";
             }
             return null;
         }
@@ -297,6 +289,9 @@ public class TripActivity extends AppCompatActivity implements ExportFragment.On
                 switch(position) {
                     case 0:
                         ((TripMapFragment) fragment).onRefresh();
+                        break;
+                    case 1:
+                        ((TripInfoFragment) fragment).onRefresh();
                         break;
                 }
             }

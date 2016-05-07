@@ -55,7 +55,8 @@
             android:name=".settings.TripSettingsActivity"
             android:label="@string/trip_settings_activity_name"
             android:parentActivityName=".TripActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Default"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
 
             <!-- Link to parent activity -->
             <meta-data

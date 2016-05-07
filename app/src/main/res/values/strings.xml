@@ -16,4 +16,15 @@
     <string name="pref_trip_resolution_dialog_message">Select the number of seconds between each mapped entry.  More time between each entry give a higher performance.  Less time give more information.</string>
     <string name="pref_trip_resolution_unit">S</string>
 
+    <!-- Trip Info Fragment strings -->
+    <string name="quick_stat_top_speed">Top Speed</string>
+    <string name="quick_stat_avg_mpg">Avg. MPG</string>
+    <string name="quick_stat_moving_time">Time Moving</string>
+    <string name="quick_stat_still_time">Time Still</string>
+
+    <!-- Units -->
+    <string name="unit_MPH">MPH</string>
+    <string name="unit_MPG">MPG</string>
+    <string name="unit_hr">Hr</string>
+    <string name="unit_min">Min</string>
 </resources>

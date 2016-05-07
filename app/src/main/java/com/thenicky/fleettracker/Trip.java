@@ -47,7 +47,10 @@ public class Trip {
     public Entry largest = new Entry(new Vital(), new Temp(), new Position());
     public Entry smallest = new Entry(new Vital(), new Temp(), new Position());
 
-    private Float distance = 0F;
+    public Float distance = 0F;
+    public Float avgMPG = 0F;
+    public long movingTime = 0;
+    public long stillTime = 0;
 
     public long loadEntriesTime = 0;
 
@@ -90,6 +93,8 @@ public class Trip {
         Position lastPosition = new Position(this.start_time);
         Entry lastEntry;
         Date lastEntryDate = this.start_time;
+        long prevTime = this.start_time.getTime();
+        long lengthTime = 0;
 
         try {
             // calculate the finalEntryDate
@@ -154,6 +159,8 @@ public class Trip {
                     p.remove();
                 }
 
+
+
                 // Create and add the new entry to the
                 lastEntry = new Entry(lastVital, lastTemp, lastPosition);
                 entries.add(lastEntry);
@@ -170,11 +177,27 @@ public class Trip {
 
                     distance += results[0];
                 }
+
+                // Calculate averageMPG
+                avgMPG += lastEntry.getVital().getMPG();
+
+                // Calculate time
+                lengthTime = lastEntry.getVital().created.getTime() - prevTime;
+                if(lastEntry.getVital().speed_obd > 1) {
+                    movingTime += lengthTime;
+                } else {
+                    stillTime += lengthTime;
+                }
+                prevTime = lastEntry.getVital().created.getTime();
+
             } while (lastEntryDate.before(finalEntryDate));
         } catch(NullPointerException e)
         {
             e.printStackTrace();
         }
+
+        // Final calculation for avgMPG
+        avgMPG = avgMPG / entries.size();
 
         // Calculate extremes based on for smallest and largest
         calculateExtremes(entries);
